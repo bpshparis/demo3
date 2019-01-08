@@ -1,0 +1,23 @@
+  {
+   "results": [
+      {
+         "alternatives": [
+            {
+               "confidence": 0.947, 
+               "transcript": "aujourd'hui maman est morte ou peut-être hier je ne sais pas j'ai reçu un télégramme de l'asile "
+            }
+         ], 
+         "final": true
+      }, 
+      {
+         "alternatives": [
+            {
+               "confidence": 0.819, 
+               "transcript": "mère décédée enterrement demain ce sentiment distingue cela ne veut rien dire c'était peut-être hier "
+            }
+         ], 
+         "final": true
+      }
+   ], 
+   "result_index": 0
+}

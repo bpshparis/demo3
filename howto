@@ -1,0 +1,13 @@
+export APIKEY=5aM9N1iJAw3K3ZIcAFbtBH96bZ_kCDtEBy9ILoItlUDH
+export URL=https://stream-fra.watsonplatform.net/speech-to-text/api
+curl  -X POST -u 'apikey:'$APIKEY -H 'Content-Type: audio/mp3' --data-binary @etranger.mp3 $URL'/v1/recognize?model=fr-FR_BroadbandModel' | tee s2t0-resp0.json
+
+export APIKEY=I8EaQWNSAg8tPnehac_4b8msKenuJYGd-d_XSOPW4fny
+export URL=https://gateway-fra.watsonplatform.net/language-translator/api
+jq -r '{text: [.results[].alternatives[].transcript], source: "fr", target: "en"}' s2t0-resp0.json | tee lt0-req0.json
+curl -u 'apikey:'$APIKEY -X POST -H 'Content-Type: application/json' -d @lt0-req0.json $URL'/v3/translate?version=2018-05-01'
+
+export APIKEY=oSgdGUlQo7kxautRGnno-AguuorXHEOe7qC629frK5I2
+export URL=https://stream-fra.watsonplatform.net/text-to-speech/api
+jq '{text : [.translations[].translation] | join(". ")}' lt0-resp0.json | tee t2s0-req0.json
+curl  -X POST -u 'apikey:'$APIKEY -H 'Content-Type: application/json' -H 'Accept: audio/mp3' -d @t2s0-req0.json --output etranger-en.mp3 $URL'/v1/synthesize?voice=en-US_MichaelVoice'
